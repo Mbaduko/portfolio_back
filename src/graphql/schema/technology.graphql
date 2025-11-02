@@ -1,0 +1,23 @@
+type Technology {
+  id: ID!
+  name: String!
+  logo: String
+  level: String!
+  experience: String
+  category: String!
+  createdAt: String
+  updatedAt: String
+}
+
+input CreateTechnologyInput {
+  name: String!
+  logo: String
+  level: String!
+  experience: String
+  category: String!
+}
+
+type Mutation {
+  createTechnology(input: CreateTechnologyInput!): Technology!
+}
+

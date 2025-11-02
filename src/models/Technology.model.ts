@@ -6,6 +6,8 @@ export interface ITechnology extends Document {
   level: string;
   experience?: string;
   category: string;
+  createdAt?: Date;
+  updatedAt?: Date;
 }
 
 const TechnologySchema: Schema = new Schema(
@@ -13,6 +15,7 @@ const TechnologySchema: Schema = new Schema(
     name: {
       type: String,
       required: true,
+      unique: true,
       trim: true,
     },
     logo: {
