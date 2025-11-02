@@ -16,6 +16,7 @@ const typeDefs = `${projectSchema}\n${technologySchema}`;
 const resolvers = {
   Query: {
     ...projectResolver.Query,
+    ...technologyResolver.Query,
   },
   Mutation: {
     ...technologyResolver.Mutation,

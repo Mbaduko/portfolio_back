@@ -17,6 +17,11 @@ input CreateTechnologyInput {
   category: String!
 }
 
+type Query {
+  technologies: [Technology!]!
+  technology(id: ID!): Technology
+}
+
 type Mutation {
   createTechnology(input: CreateTechnologyInput!): Technology!
 }
