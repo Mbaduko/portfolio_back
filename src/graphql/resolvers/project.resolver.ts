@@ -21,29 +21,7 @@ export const projectResolver = {
   Query: {
     projects: async () => {
       try {
-        console.log("ldsklfjdlskjk");
-        const projects = await projectRepository.findAll();
-        console.log("sjkdfhdsjk", projects)
-        return projects.map((project) =>({
-          id: (project._id as any).toString(),
-          title: project.title,
-          description: project.description,
-          status: project.status,
-          role: project.role,
-          livelink: project.livelink,
-          githublink: project.githublink,
-          thumbnail: project.thumbnail,
-          technologies: (project.technologies as any).map((tech: any) => ({
-            id: tech._id.toString(),
-            name: tech.name,
-            logo: tech.logo,
-            level: tech.level,
-            experience: tech.experience,
-            category: tech.category,
-          })),
-          createdAt: project.createdAt?.toISOString(),
-          updatedAt: project.updatedAt?.toISOString(),
-        }));
+        return await projectRepository.findAll(true);
       } catch (error: any) {        
         const errorResponse = handleError(error);
         throw new GraphQLError(errorResponse.message, {
