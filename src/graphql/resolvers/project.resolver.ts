@@ -102,37 +102,9 @@ export const projectResolver = {
           technologies: input.technologies,
         };
 
-        // Save project via repository
-        const project = await projectRepository.create(projectData);
+        // Save project via repository and return populated relations
+        return await projectRepository.create(projectData, { populate: ['technologies'] });
         
-        // Fetch with populated technologies
-        const populatedProject = await projectRepository.findById((project._id as any).toString(), true);
-
-        if (!populatedProject) {
-          throw new AppError('Failed to create project', 500);
-        }
-
-        // Return the complete project object
-        return {
-          id: (populatedProject._id as any).toString(),
-          title: populatedProject.title,
-          description: populatedProject.description,
-          status: populatedProject.status,
-          role: populatedProject.role,
-          livelink: populatedProject.livelink,
-          githublink: populatedProject.githublink,
-          thumbnail: populatedProject.thumbnail,
-          technologies: (populatedProject.technologies as any).map((tech: any) => ({
-            id: tech._id.toString(),
-            name: tech.name,
-            logo: tech.logo,
-            level: tech.level,
-            experience: tech.experience,
-            category: tech.category,
-          })),
-          createdAt: populatedProject.createdAt?.toISOString(),
-          updatedAt: populatedProject.updatedAt?.toISOString(),
-        };
       } catch (error: any) {
         if (thumbnailUrl){
           try {

@@ -3,9 +3,20 @@ import { IProject, Project } from '../models/Project.model';
 
 export class ProjectRepository {
   // Create
-  async create(data: Partial<IProject>): Promise<IProject> {
+  async create(
+    data: Partial<IProject>,
+    opts?: { populate?: string[] }
+  ): Promise<IProject> {
     const project = new Project(data);
-    return await project.save();
+    await project.save();
+
+    if (opts?.populate && opts.populate.length) {
+      for (const path of opts.populate) {
+        await (project as any).populate(path);
+      }
+    }
+
+    return project as IProject;
   }
 
   // Read
