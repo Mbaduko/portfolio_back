@@ -5,6 +5,7 @@ import cors from 'cors';
 import { json } from 'body-parser';
 import { readFileSync } from 'fs';
 import { join } from 'path';
+import GraphQLUpload from 'graphql-upload/GraphQLUpload.mjs';
 import { projectResolver } from './resolvers/project.resolver';
 import { technologyResolver } from './resolvers/technology.resolver';
 
@@ -15,18 +16,22 @@ const typeDefs = `${projectSchema}\n${technologySchema}`;
 
 const resolvers = {
   Query: {
-    ...projectResolver.Query,
     ...technologyResolver.Query,
   },
   Mutation: {
     ...technologyResolver.Mutation,
+    ...projectResolver.Mutation,
   },
+  Upload: GraphQLUpload,
 };
 
 export const graphqlLoader = async (app: Application) => {
   const server = new ApolloServer({
     typeDefs,
     resolvers,
+    csrfPrevention: {
+      requestHeaders: ['content-type', 'x-apollo-operation-name'],
+    },
     formatError: (error) => {
       // If it's already a GraphQLError with extensions, return it
       if (error.extensions) {

@@ -1,4 +1,31 @@
-type Query {
-  hello: String
+scalar Upload
+
+type Project {
+  id: ID!
+  title: String!
+  description: String
+  status: String!
+  role: String
+  livelink: String
+  githublink: String
+  thumbnail: String
+  technologies: [Technology!]!
+  createdAt: String
+  updatedAt: String
 }
 
+input CreateProjectInput {
+  title: String!
+  description: String
+  status: String!
+  role: String
+  livelink: String
+  githublink: String
+  thumbnail: Upload!
+  technologies: [ID!]!
+}
+
+
+type Mutation {
+  createProject(input: CreateProjectInput!): Project!
+}

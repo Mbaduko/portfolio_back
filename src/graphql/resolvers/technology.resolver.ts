@@ -17,7 +17,6 @@ export const technologyResolver = {
     technologies: async () => {
       try {
         const technologies = await technologyRepository.findAll();
-        console.log(technologies);
         return technologies.map((tech) => ({
           id: (tech._id as any).toString(),
           name: tech.name,

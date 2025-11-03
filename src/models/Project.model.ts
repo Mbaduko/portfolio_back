@@ -10,6 +10,8 @@ export interface IProject extends Document {
   githublink?: string;
   thumbnail?: string;
   technologies: ITechnology['_id'][];
+  createdAt?: Date;
+  updatedAt?: Date;
 }
 
 const ProjectSchema: Schema = new Schema(
