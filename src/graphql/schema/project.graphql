@@ -29,3 +29,8 @@ input CreateProjectInput {
 type Mutation {
   createProject(input: CreateProjectInput!): Project!
 }
+
+type Query {
+  projects: [Project!],
+  project(id:ID!): Project!
+}
