@@ -31,6 +31,19 @@ export const projectResolver = {
           },
         });
       }
+    },
+    project: async  (_:any, {id}: {id: string}) => {
+      try {
+        return await projectRepository.findById(id);
+      } catch (error: any) {        
+        const errorResponse = handleError(error);
+        throw new GraphQLError(errorResponse.message, {
+          extensions: {
+            code: errorResponse.status >= 400 && errorResponse.status < 500 ? 'BAD_REQUEST' : 'INTERNAL_SERVER_ERROR',
+            statusCode: errorResponse.status,
+          },
+        });
+      }
     }
   },
 
