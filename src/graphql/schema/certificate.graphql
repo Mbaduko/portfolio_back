@@ -1,0 +1,70 @@
+scalar Upload
+
+enum CertificateCategory {
+  COMPETITION
+  ACADEMIC
+  RECOGNITION
+}
+
+enum Priority {
+  HIGH
+  MEDIUM
+  LOW
+}
+
+type Certificate {
+  id: ID!
+  title: String!
+  issuer: String!
+  category: CertificateCategory!
+  priority: Priority!
+  issuedDate: String!
+  validUntil: String
+  credentialId: String
+  logo: String
+  description: String
+  skills: [String!]
+  createdAt: String
+  updatedAt: String
+}
+
+input CreateCertificateInput {
+  title: String!
+  issuer: String!
+  category: CertificateCategory!
+  priority: Priority!
+  issuedDate: String!
+  validUntil: String
+  credentialId: String
+  logo: Upload
+  description: String
+  skills: [String!]
+  type: String
+  status: String
+}
+
+input UpdateCertificateInput {
+  title: String
+  issuer: String
+  category: CertificateCategory
+  priority: Priority
+  issuedDate: String
+  validUntil: String
+  credentialId: String
+  logo: Upload
+  description: String
+  skills: [String!]
+  type: String
+  status: String
+}
+
+extend type Query {
+  certificates: [Certificate!]!
+  certificate(id: ID!): Certificate
+}
+
+extend type Mutation {
+  createCertificate(input: CreateCertificateInput!): Certificate!
+  updateCertificate(id: ID!, input: UpdateCertificateInput!): Certificate!
+  deleteCertificate(id: ID!): Certificate!
+}

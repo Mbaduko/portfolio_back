@@ -13,6 +13,8 @@ export interface ICertificate extends Document {
   status: string;
   validUntil?: Date;
   priority?: number;
+  createdAt?: Date;
+  updatedAt?: Date;
 }
 
 const CertificateSchema: Schema = new Schema(
