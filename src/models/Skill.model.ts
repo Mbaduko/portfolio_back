@@ -5,6 +5,8 @@ export interface ISkill extends Document {
   title: string;
   description?: string;
   technologies: ITechnology['_id'][];
+  createdAt?: Date;
+  updatedAt?: Date;
 }
 
 const SkillSchema: Schema = new Schema(

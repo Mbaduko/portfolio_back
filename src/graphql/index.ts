@@ -9,29 +9,33 @@ import GraphQLUpload from 'graphql-upload/GraphQLUpload.mjs';
 import { projectResolver } from './resolvers/project.resolver';
 import { technologyResolver } from './resolvers/technology.resolver';
 import { experienceResolver } from './resolvers/experience.resolver';
+import { skillResolver } from './resolvers/skill.resolver';
 
 // Merge all GraphQL schemas
 const projectSchema = readFileSync(join(__dirname, './schema/project.graphql'), 'utf8');
 const technologySchema = readFileSync(join(__dirname, './schema/technology.graphql'), 'utf8');
 const experienceSchema = readFileSync(join(__dirname, './schema/experience.graphql'), 'utf8');
-const typeDefs = `${projectSchema}\n${technologySchema}\n${experienceSchema}`;
+const skillSchema = readFileSync(join(__dirname, './schema/skill.graphql'), 'utf8');
+const typeDefs = `${projectSchema}\n${technologySchema}\n${experienceSchema}\n${skillSchema}`;
 
 const resolvers = {
   Query: {
     ...technologyResolver.Query,
     ...projectResolver.Query,
     ...experienceResolver.Query,
+    ...skillResolver.Query,
   },
   Mutation: {
     ...technologyResolver.Mutation,
     ...projectResolver.Mutation,
     ...experienceResolver.Mutation,
+    ...skillResolver.Mutation,
   },
   Upload: GraphQLUpload,
 };
 
 export const graphqlLoader = async (app: Application) => {
-  const server = new ApolloServer({
+  const server = new ApolloServer({  
     typeDefs,
     resolvers,
     csrfPrevention: {
