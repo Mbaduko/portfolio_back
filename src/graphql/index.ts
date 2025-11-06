@@ -8,20 +8,24 @@ import { join } from 'path';
 import GraphQLUpload from 'graphql-upload/GraphQLUpload.mjs';
 import { projectResolver } from './resolvers/project.resolver';
 import { technologyResolver } from './resolvers/technology.resolver';
+import { experienceResolver } from './resolvers/experience.resolver';
 
 // Merge all GraphQL schemas
 const projectSchema = readFileSync(join(__dirname, './schema/project.graphql'), 'utf8');
 const technologySchema = readFileSync(join(__dirname, './schema/technology.graphql'), 'utf8');
-const typeDefs = `${projectSchema}\n${technologySchema}`;
+const experienceSchema = readFileSync(join(__dirname, './schema/experience.graphql'), 'utf8');
+const typeDefs = `${projectSchema}\n${technologySchema}\n${experienceSchema}`;
 
 const resolvers = {
   Query: {
     ...technologyResolver.Query,
     ...projectResolver.Query,
+    ...experienceResolver.Query,
   },
   Mutation: {
     ...technologyResolver.Mutation,
     ...projectResolver.Mutation,
+    ...experienceResolver.Mutation,
   },
   Upload: GraphQLUpload,
 };

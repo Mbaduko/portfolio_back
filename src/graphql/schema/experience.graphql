@@ -1,0 +1,33 @@
+scalar Upload
+
+type Experience {
+  id: ID!
+  company: String!
+  companyLogo: String
+  position: String!
+  location: String
+  from: String!
+  to: String
+  achievements: [String!]
+  createdAt: String
+  updatedAt: String
+}
+
+input CreateExperienceInput {
+  company: String!
+  companyLogo: Upload
+  position: String!
+  location: String
+  from: String!
+  to: String
+  achievements: [String!]
+}
+
+type Mutation {
+  createExperience(input: CreateExperienceInput!): Experience!
+}
+
+type Query {
+  experiences: [Experience!]
+  experience(id: ID!): Experience
+}

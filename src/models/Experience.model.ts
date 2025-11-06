@@ -8,6 +8,8 @@ export interface IExperience extends Document {
   from: Date;
   to?: Date;
   achievements?: string[];
+  createdAt?: Date;
+  updatedAt?: Date;
 }
 
 const ExperienceSchema: Schema = new Schema(
