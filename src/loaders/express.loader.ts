@@ -1,15 +1,18 @@
 import { Application } from 'express';
-import { json } from 'body-parser';
+import express from 'express';
 import cors from 'cors';
 import graphqlUploadExpress from 'graphql-upload/graphqlUploadExpress.mjs';
 
 export const expressLoader = (app: Application) => {
   app.use(cors());
   
-  // Handle file uploads before JSON parsing
+  // Use Express's native JSON parser (required for Apollo Server v4+)
+  app.use(express.json());
+  app.use(express.urlencoded({ extended: true }));
+  
+  // Handle file uploads
   app.use(graphqlUploadExpress());
   
-  app.use(json());
   app.get('/health', (req, res) => res.send('Server is healthy'));
 };
 
