@@ -10,8 +10,11 @@ interface EnvConfig {
   CLOUDINARY_API_KEY: string;
   CLOUDINARY_API_SECRET: string;
   CLOUDINARY_THUMBNAIL_FOLDER: string;
+  MAIL_SERVICE?: string;
+  MAIL_USER?: string;
+  MAIL_PASS?: string;
+  ADMIN_EMAIL?: string;
 }
-
 const requiredEnvVars = ['MONGODB_URI', 'CLOUDINARY_CLOUD_NAME', 'CLOUDINARY_API_KEY', 'CLOUDINARY_API_SECRET'];
 const missingEnvVars = requiredEnvVars.filter((varName) => !process.env[varName]);
 
@@ -30,4 +33,8 @@ export const env: EnvConfig = {
   CLOUDINARY_API_KEY: process.env.CLOUDINARY_API_KEY!,
   CLOUDINARY_API_SECRET: process.env.CLOUDINARY_API_SECRET!,
   CLOUDINARY_THUMBNAIL_FOLDER: process.env.CLOUDINARY_THUMBNAIL_FOLDER || 'thumbnails',
+  MAIL_SERVICE: process.env.MAIL_SERVICE,
+  MAIL_USER: process.env.MAIL_USER,
+  MAIL_PASS: process.env.MAIL_PASS,
+  ADMIN_EMAIL: process.env.ADMIN_EMAIL,
 };
