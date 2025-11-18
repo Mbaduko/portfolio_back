@@ -15,6 +15,7 @@ export const handleError = (error: any): ErrorResponse => {
   }
 
   // Otherwise, return 500 with internal server error message
+  console.error('Unhandled Error:', error);
   return {
     message: 'Internal Server Error',
     status: 500,
