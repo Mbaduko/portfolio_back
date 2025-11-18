@@ -2,6 +2,7 @@ import { ProjectRepository } from '../../repositories/Project.repository';
 import { AppError, handleError } from '../../utils';
 import { GraphQLError } from 'graphql/error';
 import { deleteImageFromCloudinary, extractPublicIdFromUrl, uploadStreamToCloudinary } from '../../utils/cloudinary';
+import { Types } from 'mongoose';
 import { Readable } from 'stream';
 
 const projectRepository = new ProjectRepository();
@@ -91,6 +92,16 @@ export const projectResolver = {
         thumbnailUrl = await uploadStreamToCloudinary(stream);
 
         // Create project data with Cloudinary URL
+        // Validate and convert technology IDs (strings) to ObjectId instances
+        if (!Array.isArray(input.technologies)) {
+          throw new AppError('Technologies must be an array of IDs', 400);
+        }
+
+        const invalidId = input.technologies.find((id) => !Types.ObjectId.isValid(id));
+        if (invalidId) {
+          throw new AppError('Invalid technology ID provided.', 400);
+        }
+
         const projectData = {
           title: input.title,
           description: input.description,
@@ -99,7 +110,9 @@ export const projectResolver = {
           livelink: input.livelink,
           githublink: input.githublink,
           thumbnail: thumbnailUrl,
-          technologies: input.technologies,
+          technologies: Array.isArray(input.technologies)
+            ? input.technologies.map((id) => new Types.ObjectId(id))
+            : [],
         };
 
         // Save project via repository and return populated relations
